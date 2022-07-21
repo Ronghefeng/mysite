@@ -1,0 +1,8 @@
+开启 Django shell
+方式一：
+    ./manage.py shell
+方式一：
+    1、python shell
+    2、import django
+    3、django.setup()
+
