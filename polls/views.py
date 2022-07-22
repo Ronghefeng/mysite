@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from .models import Question, Choice
@@ -17,6 +17,10 @@ def detail(request, question_id):
     question = get_object_or_404(Question, question_id)
 
     return render(request, "polls/detail.html", {"question": question})
+
+
+def test_converter(request, year, **kwargs):
+    return HttpResponse("the year for selectd is %s" % year)
 
 
 def vote(request, question_id):
