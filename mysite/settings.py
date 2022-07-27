@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "learn",
     "polls",
+    "crawl",
 ]
 
 MIDDLEWARE = [
@@ -139,4 +140,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # 静态文件
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-
