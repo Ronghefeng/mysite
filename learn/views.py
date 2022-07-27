@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 
 from .models import Document
@@ -24,4 +24,13 @@ def simple_upload(request):
 
 
 def model_form_upload(request):
-    pass
+    if request.method == "POST":
+        form = DocumentForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect("learn:home")
+
+    else:
+        form = DocumentForm()
+    return render(request, "learn/model_form_upload.html", {"form": form})

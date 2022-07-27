@@ -1,0 +1,8 @@
+{% block content %}
+<form method="post", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">上传</button>
+</form>
+<p><a href="{% url 'learn:home' %}">返回主页</a></p>
+{% endblock %}
