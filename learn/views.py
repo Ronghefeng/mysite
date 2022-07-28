@@ -1,8 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 
 from .models import Document
-from .forms import DocumentForm
+from .forms import DocumentForm, AddForm
 
 
 def home(request):
@@ -34,3 +35,21 @@ def model_form_upload(request):
     else:
         form = DocumentForm()
     return render(request, "learn/model_form_upload.html", {"form": form})
+
+
+def add_view(request):
+
+    if request.method.lower() == "post":
+
+        form = AddForm(request.POST)
+
+        if form.is_valid():  # 检查 form 表单中的数据是否有效，有效的数据会保存到 cleaned_data 中
+
+            numb1 = form.cleaned_data["numb1"]
+            numb2 = form.cleaned_data["numb2"]
+
+            return HttpResponse(str(int(numb1) + int(numb2)))
+    else:
+        form = AddForm()  # 当 get 请求时返回空表单，否则返回当前填入数据的表单
+
+    return render(request, "learn/add_form.html", {"form": form})
