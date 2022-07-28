@@ -1,3 +1,2 @@
-select * from django_migrations
-
+show tables
 -- delete from django_migrations where id = 20;
