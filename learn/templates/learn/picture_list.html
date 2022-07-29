@@ -5,10 +5,10 @@
         {% for picture in picture_list %}
             <li>
                 <p>图片详情：</p>
-                <a href="/learn/pic/{{ picture.id }}/">{{ picture.title }}</a> ----- {{ picture.date | date:'Y-m-j' }}
                 {% comment %}
-                <a href="{% url 'learn:pic_detail'picture.id %}">{{ picture.title }}</a> ----- {{ picture.date | date:'Y-m-j' }}
+                <a href="/learn/pic/{{ picture.id }}/">{{ picture.title }}</a> ----- {{ picture.date | date:'Y-m-j' }}
                 {% endcomment %}
+                <a href="{% url 'learn:pic_detail' picture.id %}">{{ picture.title }}</a> ----- {{ picture.date | date:'Y-m-j' }}
             </li>
         {% endfor %}
     {% else %}

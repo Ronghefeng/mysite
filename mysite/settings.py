@@ -130,13 +130,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# 去各 app 下的 static 目录查找对应静态文件
 STATIC_URL = "/static/"
+# 通用的静态文件
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # 保存上传文件
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-
-# 静态文件
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
