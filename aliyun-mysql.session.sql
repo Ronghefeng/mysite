@@ -1,2 +1,1 @@
-show tables
--- delete from django_migrations where id = 20;
+TRUNCATE TABLE learn_picture

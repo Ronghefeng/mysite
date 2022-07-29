@@ -1,8 +1,10 @@
+from typing import Optional
+from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 
-from .models import Document
+from .models import Document, Picture
 from .forms import DocumentForm, AddForm
 
 
@@ -53,3 +55,22 @@ def add_view(request):
         form = AddForm()  # 当 get 请求时返回空表单，否则返回当前填入数据的表单
 
     return render(request, "learn/add_form.html", {"form": form})
+
+
+class Piclist(ListView):
+
+    queryset = Picture.objects.all().order_by("-date")
+
+    context_object_name: Optional[str] = 'picture_list'
+
+
+class PicDetail(DetailView):
+
+    model = Picture
+
+
+class PicUpload(CreateView):
+
+    model = Picture
+
+    fields = ("title", "image")

@@ -1,4 +1,9 @@
+from django.urls import reverse
+import os
 from django.db import models
+from datetime import date
+from uuid import uuid4
+from django.conf import settings
 
 
 class Document(models.Model):
@@ -34,3 +39,19 @@ class OrderEmployee(Employee):
     @property
     def work_id(self):
         return f"{self.name}:{self.id}"
+
+
+class Picture(models.Model):
+
+    title = models.CharField(max_length=20, blank=True, default="")
+
+    image = models.ImageField(upload_to="mypictures", blank=True)
+
+    date = models.DateField(default=date.today)
+
+    def __str__(self) -> str:
+        return self.title
+
+    def get_absolute_url(self) -> str:
+        # 对象编辑或者创建后的返回地址
+        return reverse("learn:pic_detail", args=[str(self.id)])

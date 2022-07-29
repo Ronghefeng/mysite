@@ -1,0 +1,9 @@
+<h3>{{ picture.title }}</h3>
+{% if picture.image %}
+<p><img src="{{ picture.image.url }}" width="500px" height="500px"/></p>
+{% endif %}
+<p>上传日期：{{ picture.date | date:'Y-m-j' }}</p>
+<p>
+    <a href="{% url 'learn:pic_list' %}">查看所有照片</a>
+    <a href="{% url 'learn:pic_upload' %}">上传新照片</a>
+</p>
