@@ -1,4 +1,3 @@
-from typing import Optional
 from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -60,8 +59,6 @@ def add_view(request):
 class Piclist(ListView):
 
     queryset = Picture.objects.all().order_by("-date")
-
-    context_object_name: Optional[str] = 'picture_list'
 
 
 class PicDetail(DetailView):
