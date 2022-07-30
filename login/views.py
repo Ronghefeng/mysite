@@ -1,3 +1,4 @@
+from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -83,3 +84,51 @@ def logout(request):
     # del request.session["username"]
 
     return response
+
+
+def login_required(func):
+    # 登录装饰器，解密 request 的 cookie 和 session 验证用户
+
+    def valid_cookie_and_session(request):
+
+        try:
+
+            session_id = request.COOKIES.get("session_id")
+
+            session_username = request.session.get("username")
+
+            timestamp_signing = signing.TimeStampSinger()
+
+            result = timestamp_signing.unsign(
+                session_id, max_age=3600
+            )  # 验证加密时间是否为一个小时内
+
+            username = signing.loads(result)["username"]
+
+            if username and username == session_username:
+
+                return func(request)
+
+            else:
+                return HttpResponse("用户未登录")
+
+        except Exception as e:
+            return HttpResponse("请用户先登录")
+
+    return valid_cookie_and_session
+
+
+def encryption_decorator(func):
+    def encryption(request):
+
+        response = func(request)
+
+        org_cookie_val = response.COOKIES
+
+        encrypted_cookie_val = signing.TimestampSigner().sign(org_cookie_val)
+
+        response.set_cookie("username", encrypted_cookie_val, 3600)
+
+        return response
+
+    return encryption
