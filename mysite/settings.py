@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "learn",
     "polls",
     "crawl",
+    "login",
 ]
 
 MIDDLEWARE = [
@@ -50,7 +51,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",  # 点击劫持保护
 ]
 
 ROOT_URLCONF = "mysite.urls"

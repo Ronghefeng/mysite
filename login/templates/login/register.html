@@ -1,0 +1,9 @@
+<h1>注册用户页面</h1>
+{% if msg %}
+{{ mgs }}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="注册"/>
+</form>
