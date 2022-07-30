@@ -21,10 +21,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path("__debug__/", include("debug_toolbar.urls")),  # 系统性能监控
     path("backend/", admin.site.urls),
     path("polls/", include("polls.urls")),
     path("learn/", include("learn.urls")),
     path("crawl/", include("crawl.urls")),
     path("login/", include("login.urls")),
-    path("__debug__/", include("debug_toolbar.urls")),
+    path("syscache/", include("sys_cache.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

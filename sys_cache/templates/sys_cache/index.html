@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load cache %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Title</title>
+    </head>
+    <body>
+        {% cache 5000 'now' %}
+        <p>缓存时间: {{ now }}</p>
+        {% endcache %}
+        <p>不使用缓存: {{ now }}</p>
+    </body>
+</html>

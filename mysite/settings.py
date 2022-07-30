@@ -42,12 +42,7 @@ INSTALLED_APPS = [
 
 THIRD_PARTY_APPS = ["debug_toolbar"]
 
-MY_APPS = [
-    "learn",
-    "polls",
-    "crawl",
-    "login",
-]
+MY_APPS = ["learn", "polls", "crawl", "login", "sys_cache"]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
 
@@ -156,3 +151,33 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+
+# The cache backends to use.
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_HOST_DEFAULT"),
+        "TIMEOUT": 300,  # 默认缓存过期时间
+        "OPTIONS": {
+            # 连接池配置
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, "retry_on_timeout": True}
+        },
+    },
+    "session": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_HOST_SESSION"),
+        "TIMEOUT": 300,  # 默认缓存过期时间
+        "OPTIONS": {
+            # 连接池配置
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, "retry_on_timeout": True}
+        },
+    },
+}
+# CACHE_MIDDLEWARE_KEY_PREFIX = ""
+# CACHE_MIDDLEWARE_SECONDS = 600
+# CACHE_MIDDLEWARE_ALIAS = "default"
+
+# 修改默认 session 缓存系统
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "session"
