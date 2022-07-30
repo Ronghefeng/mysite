@@ -26,4 +26,5 @@ urlpatterns = [
     path("learn/", include("learn.urls")),
     path("crawl/", include("crawl.urls")),
     path("login/", include("login.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

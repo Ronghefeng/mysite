@@ -38,13 +38,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+THIRD_PARTY_APPS = ["debug_toolbar"]
+
+MY_APPS = [
     "learn",
     "polls",
     "crawl",
     "login",
 ]
 
+INSTALLED_APPS += THIRD_PARTY_APPS
+
+INSTALLED_APPS += MY_APPS
+
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -141,3 +151,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # 保存上传文件
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# 监听本地
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
