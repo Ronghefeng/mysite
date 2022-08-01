@@ -11,6 +11,7 @@ urlpatterns = [
     path("add/", views.add_view, name="add"),
     path("pic_list/", views.Piclist.as_view(), name="pic_list"),
     path("pic_upload/", views.PicUpload.as_view(), name="pic_upload"),
+    path("pic_download/", views.DownLoadView().download_pic, name="pic_download"),
     re_path(r"pic/(?P<pk>\d+)/$", views.PicDetail.as_view(), name="pic_detail"),
 ]
 

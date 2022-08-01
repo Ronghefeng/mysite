@@ -1,5 +1,7 @@
+import os
+from django.conf import settings
 from django.views.generic import ListView, DetailView, CreateView
-from django.http import HttpResponse
+from django.http import FileResponse, Http404, HttpResponse, StreamingHttpResponse
 from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 
@@ -36,6 +38,82 @@ def model_form_upload(request):
     else:
         form = DocumentForm()
     return render(request, "learn/model_form_upload.html", {"form": form})
+
+
+# 文件下载
+class DownLoadView:
+
+    FILE_URL = os.path.join(settings.MEDIA_ROOT, "mypictures")
+    DOWNLOAD_PIC = "liuyifei2.jpg"
+    DOWNLOAD_FILE = "test_download_file.txt"
+    DOWNLOAD_CSV_FILE = "test_download_csv.csv"
+
+    def download_pic_method_1(self, request):
+        # 使用 open 打开文件读取内容返回，此方式不适合大型文件，容易占用较多内存
+
+        with open(os.path.join(self.FILE_URL, self.DOWNLOAD_FILE)) as f:
+            file_c = f.read()
+
+        # 显示图片：
+        import base64
+
+        with open(os.path.join(self.FILE_URL, self.DOWNLOAD_PIC), "rb") as f:
+            c = f.read()
+            img_stream = base64.b64encode(c).decode()
+
+        # 需要注意前段展示不同图片类型，src 的内容有区别
+        return HttpResponse(
+            f'<img style="width:180px" src="data:image/jpg;base64,{img_stream}"><br><h1>{file_c}</h1>'
+        )
+
+    def download_pic_method_2(self, request):
+        # 使用 HttpResonse 下载，适合 txt 小文件，不适合大的二进制文件
+        # 直接浏览器访问地址下载文件到本地机器
+
+        filepath = os.path.join(self.FILE_URL, self.DOWNLOAD_FILE)
+        with open(filepath) as f:
+            try:
+                response = HttpResponse(f)
+                response["content_type"] = "application/octet-stream"
+                response[
+                    "Content-Disposition"
+                ] = "attachment; filename=" + os.path.basename(filepath)
+                return response
+            except Exception:
+                raise Http404
+
+    def download_pic_method_3(self, request):
+        # 使用 StreamingHttpResponse 下载，适合流式传输的大型文件，例如 csv 等
+
+        file_path = os.path.join(self.FILE_URL, self.DOWNLOAD_CSV_FILE)
+
+        try:
+            response = StreamingHttpResponse(open(file_path, "rb"))
+            response["content_type"] = "application/octet-stream"
+            response[
+                "Content-Disposition"
+            ] = "attachment; filename=" + os.path.basename(file_path)
+            return response
+        except Exception:
+            raise Http404
+
+    def download_pic_method_4(self, request):
+        # 使用 FileResponse 下载，适合大文件
+
+        file_path = os.path.join(self.FILE_URL, self.DOWNLOAD_CSV_FILE)
+
+        try:
+            response = FileResponse(open(file_path, "rb"))
+            response["content_type"] = "application/octet-stream"
+            response[
+                "Content-Disposition"
+            ] = "attachment; filename=" + os.path.basename(file_path)
+            return response
+        except Exception:
+            raise Http404
+
+    def download_pic(self, request):
+        return self.download_pic_method_4(request)
 
 
 def add_view(request):
