@@ -28,4 +28,6 @@ urlpatterns = [
     path("crawl/", include("crawl.urls")),
     path("login/", include("login.urls")),
     path("syscache/", include("sys_cache.urls")),
+    path("api/", include("api.urls")),
+    path("api-auth/", include("rest_framework.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = ["debug_toolbar"]
+THIRD_PARTY_APPS = ["debug_toolbar", "rest_framework"]
 
-MY_APPS = ["learn", "polls", "crawl", "login", "sys_cache"]
+MY_APPS = ["learn", "polls", "crawl", "login", "sys_cache", "api"]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
 
@@ -181,3 +181,36 @@ CACHES = {
 # 修改默认 session 缓存系统
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
+
+# 日志配置
+LOGGING = {
+    "version": 1,
+    "loggers": {
+        "django": {"handlers": ["django_console"], "level": "DEBUG"},
+        "api_views": {"handlers": ["console", "file_engine"], "level": "DEBUG"},
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simpleRe",
+        },
+        "django_console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simpleRe",
+        },
+        "file_engine": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "./logs/fileengine.log",
+            "formatter": "simpleRe",
+        },
+    },
+    "formatters": {
+        "simpleRe": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+}
