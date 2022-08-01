@@ -11,6 +11,6 @@ class HomeView(views.APIView):
 
     def get(self, request, *args, **kwargs):
 
-        logger.debug("再测试一下TESTADD")
+        logger.info("再测试一下TESTADD")
 
         return response.Response(status=status.HTTP_200_OK)

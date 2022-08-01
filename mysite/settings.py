@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = ["debug_toolbar", "rest_framework"]
+THIRD_PARTY_APPS = [
+    "debug_toolbar",  # 性能监控工具
+    "rest_framework",
+    "django_extensions",  # 扩展命令
+]
 
 MY_APPS = ["learn", "polls", "crawl", "login", "sys_cache", "api"]
 
