@@ -28,3 +28,23 @@ dinar_create = sync_to_async(Dinar.objects.create)
 
 dirham_get_all = sync_to_async(Dirham.objects.all)
 dirham_create = sync_to_async(Dirham.objects.create)
+
+# 民宿爬虫相关模型
+class House(models.Model):
+    pass
+
+
+class Host(models.Model):
+    pass
+
+
+class Labels(models.Model):
+    pass
+
+
+class Facility(models.Model):
+    pass
+
+
+class City(models.Model):
+    pass
