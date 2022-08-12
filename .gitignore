@@ -4,3 +4,4 @@
 media/
 *.ipynb
 logs/
+__pycache__
