@@ -1,7 +1,8 @@
+.python-version
 .venv/
 .env
 .vscode/
 media/
 *.ipynb
 logs/
-__pycache__
+*/__pycache__
